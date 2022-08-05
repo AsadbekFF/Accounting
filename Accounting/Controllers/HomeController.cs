@@ -157,6 +157,9 @@ namespace Accounting.Controllers
             return View("Index");
         }
         #endregion
+
+        #region Calculating total budget
+        //Calculating budget of given month or for all records.
         public int CalculatingOverallMoney(List<AccountBudget> accounts)
         {
             int result = 0;
@@ -175,6 +178,7 @@ namespace Accounting.Controllers
 
             return result;
         }
+        #endregion
         public async Task<IActionResult> Index()
         {
             budgets = await GetRecordsAsync();
