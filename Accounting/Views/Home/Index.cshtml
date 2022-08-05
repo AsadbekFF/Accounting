@@ -1,0 +1,88 @@
+﻿@model AccountBudget
+@{
+    ViewData["Title"] = "Home Page";
+}
+<link href="~/js/site.js" rel="stylesheet" />
+<div class="content">
+    <div class="align-content-center">
+        <form asp-action="UploadRecord" method="post">
+            <input class="active" asp-for="Date" type="datetime-local" 
+                   value="@DateTime.Now" id="dateLocal" />
+            <select id="i1" class="active" asp-for="Budget" required>
+                <option value="" disabled selected>Budget</option>
+                <option value="Income">Income</option>
+                <option value="Debt">Debt</option>
+            </select>
+            <input class="active" asp-for="AmountOfMoney" type="number" placeholder="Amount of money" required />
+            <select id="i2" class="active" asp-for="Category" style="display: none">
+                <option value="" disabled selected>Category</option>
+                <option value="Заработная плата">Заработная плата</option>
+                <option value="Доход с сдачи в аренду недвижимости">Доход с сдачи в аренду недвижимости</option>
+                <option value="Иные доходы">Иные доходы</option>
+            </select>
+            <select id="i3" class="active" asp-for="Category">
+                <option value="" disabled selected>Category</option>
+                <option value="Продукты питания">Продукты питания</option>
+                <option value="Транспорт">Транспорт</option>
+                <option value="Мобильная связь">Мобильная связь</option>
+                <option value="Интернет">Интернет</option>
+                <option value="Развлечения">Развлечения</option>
+                <option value="Другое">Другое</option>
+            </select>
+            <textarea class="active" asp-for="Comments" id="w3review" rows="4" cols="50" placeholder="Comments"></textarea>
+            <button type="submit">Enter</button>
+        </form>
+        <script src="~/js/site.js"></script>
+    </div>
+    <div class="search-sort">
+        <form class="form" method="post" asp-action="SortByMonth">
+            <input type="month" asp-for="Date" />
+            <button type="submit">Submit</button>
+        </form>
+        <form class="form2" method="post" asp-action="SearchBy">
+            <select id="i4" asp-for="SearchBy">
+                <option value="" disabled selected>Searching by</option>
+                <option value="AmountOfMoney">Amount of money</option>
+                <option value="Category">Category</option>
+                <option value="Comments">Comments</option>
+            </select>
+            <input class="form" id="i6" asp-for="Text" type="text" placeholder="search" />
+            <button class="form" type="submit" name="submit">Search</button>
+        </form>
+    </div>
+</div>
+
+@if (ViewBag.Records.Count > 0)
+{
+    <table class="table" border="1">
+        <tr>
+            <td class="qwerty" width="80px">Budget</td>
+            <td class="qwerty" width="120px">Amount of money</td>
+            <td class="qwerty" width="100px">Date</td>
+            <td class="qwerty" width="200px">Category</td>
+            <td class="qwerty" width="300px">Comments</td>
+        </tr>
+    </table>
+    @foreach (var item in ViewBag.Records)
+    {
+        <table class="table" border="1">
+            <tr>
+                <td class="qwerty" width="80px">@item.Budget</td>
+                <td class="qwerty" width="120px">@item.AmountOfMoney</td>
+                <td class="qwerty" width="100px">@item.Date</td>
+                <td class="qwerty" width="200px">@item.Category</td>
+                <td class="qwerty" width="300px">@item.Comments</td>
+            </tr>
+        </table>
+    }
+    <table class="table" border="1">
+        <tr>
+            <td class="qwerty" width="200px">Total</td>
+            <td class="qwerty" width="500px">@ViewBag.Calculation</td>
+        </tr>
+    </table>
+}
+else
+{
+    <h3 style="text-align: center">No data</h3>
+}
